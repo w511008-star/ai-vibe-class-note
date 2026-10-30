@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#f6faf8">
+  <meta name="description" content="AI Vibe Coding 工作坊的單頁互動課堂筆記：教學情境、AI 工作方法與 EMI 學習。">
+  <title>AI Vibe Coding｜課堂筆記</title>
+  <style>
+    :root{color-scheme:light;--bg:#f6faf8;--paper:#fff;--ink:#213943;--muted:#5f747b;--line:#dceae6;--teal:#247d77;--light:#e8f4f0;--coral:#a85d55}
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;background:var(--bg);color:var(--ink);font-family:"Noto Sans TC","Microsoft JhengHei","PingFang TC",system-ui,sans-serif;line-height:1.65}
+    button{font:inherit}
+    a{color:inherit}
+    .wrap{width:min(1120px,calc(100% - 44px));margin:auto}
+    .topline{height:7px;background:var(--teal)}
+    header{padding:42px 0 30px;border-bottom:1px solid var(--line)}
+    .eyebrow{font:700 .76rem/1.4 system-ui,sans-serif;letter-spacing:.18em;color:var(--teal);text-transform:uppercase}
+    h1{font-size:clamp(2.15rem,5vw,4.2rem);line-height:1.15;letter-spacing:-.035em;margin:18px 0 17px}
+    .lead{max-width:720px;color:var(--muted);font-size:clamp(1rem,1.8vw,1.19rem);margin:0}
+    .meta{display:flex;gap:12px;flex-wrap:wrap;margin-top:25px}
+    .pill{border:1px solid var(--line);background:#fff;border-radius:999px;padding:5px 13px;color:var(--muted);font-size:.82rem}
+    nav{position:sticky;top:0;z-index:10;background:rgba(246,250,248,.96);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+    .nav-inner{display:flex;gap:6px;align-items:center;min-height:68px;overflow-x:auto}
+    .tab{border:0;background:transparent;color:var(--muted);padding:11px 17px;border-radius:10px;white-space:nowrap;cursor:pointer;font-weight:650}
+    .tab[aria-selected="true"]{background:var(--teal);color:#fff}
+    .tab:focus-visible,.step-button:focus-visible{outline:3px solid #8fcac2;outline-offset:3px}
+    main{padding:44px 0 86px}
+    .section-head{display:flex;justify-content:space-between;align-items:end;gap:20px;margin-bottom:26px}
+    .section-head h2{font-size:clamp(1.55rem,3vw,2.25rem);letter-spacing:-.025em;line-height:1.25;margin:7px 0 0}
+    .section-note{color:var(--muted);font-size:.88rem;max-width:320px;margin:0}
+    .panel[hidden]{display:none}
+    .flow{position:relative;max-width:920px;margin:0 auto}
+    .flow:before{content:"";position:absolute;left:25px;top:42px;bottom:62px;border-left:2px dashed #add0c9}
+    .step{display:grid;grid-template-columns:52px minmax(0,1fr);gap:22px;position:relative;margin-bottom:18px}
+    .num{width:52px;height:52px;border-radius:50%;display:grid;place-items:center;background:var(--teal);color:white;font-weight:760;font-size:1.08rem;z-index:1;margin-top:22px}
+    .step-card{border:1px solid var(--line);background:var(--paper);border-radius:18px;box-shadow:0 8px 30px rgba(36,72,70,.035);overflow:hidden}
+    .step-card.focus{background:#eef7f3;border-color:#b6d9d0}
+    .step-button{width:100%;border:0;background:transparent;text-align:left;display:flex;gap:18px;align-items:center;justify-content:space-between;padding:20px 25px;cursor:pointer;color:var(--ink)}
+    .step-title{font-size:1.18rem;font-weight:740;line-height:1.35}
+    .step-summary{display:block;font-size:.9rem;font-weight:420;color:var(--muted);margin-top:6px}
+    .chev{color:var(--teal);font-size:1.6rem;line-height:1;transition:transform .2s}
+    .step-button[aria-expanded="true"] .chev{transform:rotate(45deg)}
+    .step-detail{border-top:1px solid var(--line);padding:18px 25px 22px;color:#40555d}
+    .step-detail p{margin:0}
+    .step-detail p+p{margin-top:10px}
+    .tool{font-weight:700;color:var(--teal)}
+    .callout{max-width:920px;margin:28px auto 0;padding:18px 23px;border-left:4px solid var(--teal);background:var(--light);border-radius:0 12px 12px 0;color:#3e5960;font-size:.94rem}
+    .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+    .concept{background:#fff;border:1px solid var(--line);border-radius:18px;padding:27px 25px;min-height:250px}
+    .concept .index{font:700 .8rem system-ui,sans-serif;letter-spacing:.12em;color:var(--teal)}
+    .concept h3{font-size:1.26rem;margin:23px 0 8px}
+    .concept p{color:var(--muted);margin:0}
+    .terms{margin-top:18px;display:flex;gap:7px;flex-wrap:wrap}
+    .term{display:inline-block;background:var(--light);color:#266963;border-radius:7px;padding:4px 8px;font:600 .78rem/1.45 system-ui,sans-serif}
+    .note-box{margin-top:24px;color:var(--muted);font-size:.91rem}
+    .emi-layout{display:grid;grid-template-columns:1.2fr .8fr;gap:19px}
+    .emi-main,.language{background:#fff;border:1px solid var(--line);border-radius:18px;padding:31px}
+    .emi-row{display:grid;grid-template-columns:1fr 44px;align-items:center;gap:12px;border-bottom:1px solid var(--line);padding:19px 0;font-weight:720;font-size:clamp(1.15rem,2.6vw,1.65rem)}
+    .emi-row:first-of-type{margin-top:18px}
+    .emi-row:last-of-type{border-bottom:0}
+    .mark{text-align:right;font-size:2rem;line-height:1}
+    .bad{color:var(--coral)}.good{color:var(--teal)}
+    .emi-main p,.language p{color:var(--muted)}
+    .language ul{list-style:none;padding:0;margin:24px 0 0}
+    .language li{padding:12px 0;border-top:1px solid var(--line)}
+    .language strong{font-weight:700}
+    footer{border-top:1px solid var(--line);padding:27px 0 45px;color:var(--muted);font-size:.85rem}
+    @media(max-width:700px){.wrap{width:min(100% - 32px,1120px)}header{padding:31px 0 26px}.section-head{display:block}.section-note{margin-top:11px}.flow:before{left:19px}.step{grid-template-columns:40px minmax(0,1fr);gap:10px}.num{width:40px;height:40px;margin-top:23px}.step-button{padding:17px 16px}.step-detail{padding:16px}.grid,.emi-layout{grid-template-columns:1fr}.concept{min-height:0}.emi-main,.language{padding:22px}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.chev{transition:none}}
+  </style>
+</head>
+<body>
+  <div class="topline"></div>
+  <header class="wrap">
+    <div class="eyebrow">In-Class Note · 2026.10.30</div>
+    <h1>AI Vibe Coding<br>工作坊</h1>
+    <p class="lead">依手寫筆記與課後確認，將課堂環境、教學資源、AI 輔助學習與語言觀點整理成可逐項瀏覽的單頁筆記。</p>
+    <div class="meta"><span class="pill">實踐大學 · AIEA 學院</span><span class="pill">課堂筆記第 1 頁</span><span class="pill">流程為課後歸納</span></div>
+  </header>
+  <nav aria-label="課堂筆記主題"><div class="wrap nav-inner" role="tablist" aria-label="主題分頁">
+    <button class="tab" type="button" role="tab" id="tab-flow" aria-controls="view-flow" aria-selected="true" data-view="flow">學習情境流程</button>
+    <button class="tab" type="button" role="tab" id="tab-method" aria-controls="view-method" aria-selected="false" data-view="method" tabindex="-1">AI 工作方法</button>
+    <button class="tab" type="button" role="tab" id="tab-language" aria-controls="view-language" aria-selected="false" data-view="language" tabindex="-1">語言與 EMI</button>
+  </div></nav>
+  <main class="wrap">
+    <section class="panel" id="view-flow" role="tabpanel" aria-labelledby="tab-flow">
+      <div class="section-head"><div><div class="eyebrow">01 / Use cases</div><h2>從材料到學習回饋</h2></div><p class="section-note">依使用情境重組五個階段。點選卡片可閱讀筆記細節。</p></div>
+      <div class="flow">
+        <article class="step"><div class="num">01</div><div class="step-card"><button class="step-button" aria-expanded="true" aria-controls="detail-1"><span><span class="step-title">備課與取得材料</span><span class="step-summary">「魚池」網站 × 課堂環境</span></span><span class="chev" aria-hidden="true">+</span></button><div class="step-detail" id="detail-1"><p><span class="tool">AI 教學資源總入口</span>是講師稱為「魚池」的網站，裡面分類存放他的教學材料。</p><p>筆記另列教師使用 desktop camera、課堂錄影、黑板與電子白板等環境配置。</p></div></div></article>
+        <article class="step"><div class="num">02</div><div class="step-card"><button class="step-button" aria-expanded="false" aria-controls="detail-2"><span><span class="step-title">課堂記錄與即時互動</span><span class="step-summary">in-class note × in-class Q&amp;A</span></span><span class="chev" aria-hidden="true">+</span></button><div class="step-detail" id="detail-2" hidden><p>學生做課堂筆記；即時問答以 <span class="tool">Slido</span>、<span class="tool">Mentimeter</span> 為例。</p><p>旁註有 attention-based 與「注意力稀缺」，但原筆記未完整記下其論證。</p></div></div></article>
+        <article class="step"><div class="num">03</div><div class="step-card"><button class="step-button" aria-expanded="false" aria-controls="detail-3"><span><span class="step-title">延伸自主與合作學習</span><span class="step-summary">ChatGPT Voice Mode × 討論錄音</span></span><span class="chev" aria-hidden="true">+</span></button><div class="step-detail" id="detail-3" hidden><p>筆記提及學生自主學習、小組討論錄音，以及請 AI 聆聽後協助<span class="tool">歸納與整理</span>討論內容。</p></div></div></article>
+        <article class="step"><div class="num">04</div><div class="step-card"><button class="step-button" aria-expanded="false" aria-controls="detail-4"><span><span class="step-title">跨語言對照學習</span><span class="step-summary">Chrome 內建 Gemini × YouTube</span></span><span class="chev" aria-hidden="true">+</span></button><div class="step-detail" id="detail-4" hidden><p>針對 YouTube 影片<span class="tool">指定時間戳記</span>的內容，將原本語言翻譯成另一種語言的文字，方便使用者對照學習。</p></div></div></article>
+        <article class="step"><div class="num">05</div><div class="step-card focus"><button class="step-button" aria-expanded="false" aria-controls="detail-5"><span><span class="step-title">檢視學習本身</span><span class="step-summary">EMI Instruction × ／ EMI Learning ○</span></span><span class="chev" aria-hidden="true">+</span></button><div class="step-detail" id="detail-5" hidden><p>講者用叉、圈標記，強調關注<span class="tool">學生是否真正學會</span>，而不只是採用了 EMI 授課形式。</p></div></div></article>
+      </div>
+      <p class="callout"><strong>閱讀方式：</strong>這條主線是為便於複習而重組的使用情境，不表示講者曾提出一套固定順序或因果模型。</p>
+    </section>
+    <section class="panel" id="view-method" role="tabpanel" aria-labelledby="tab-method" hidden>
+      <div class="section-head"><div><div class="eyebrow">02 / AI methods</div><h2>AI 工作方法的複習索引</h2></div><p class="section-note">依概念用途歸類，保留筆記用語。</p></div>
+      <div class="grid">
+        <article class="concept"><span class="index">01 / TASK</span><h3>任務表達</h3><p>交給 AI 的任務與背景資訊是否清楚？</p><div class="terms"><span class="term">prompt engineering</span><span class="term">context</span></div></article>
+        <article class="concept"><span class="index">02 / OPERATION</span><h3>運作安排</h3><p>AI 如何持續處理任務、檢查進度或採取下一步？</p><div class="terms"><span class="term">harness</span><span class="term">loop (heartbeat)</span><span class="term">agentic AI</span></div></article>
+        <article class="concept"><span class="index">03 / REUSE</span><h3>重複使用</h3><p>如何整理常用資料、能力或步驟，以供再次使用？</p><div class="terms"><span class="term">Project</span><span class="term">GPTs</span><span class="term">GEMs</span><span class="term">Skills</span><span class="term">workflow</span></div></article>
+      </div>
+      <p class="note-box">這些問題是課後整理的複習線索，不是講者對各概念或工具的正式定義。</p>
+    </section>
+    <section class="panel" id="view-language" role="tabpanel" aria-labelledby="tab-language" hidden>
+      <div class="section-head"><div><div class="eyebrow">03 / Language &amp; EMI</div><h2>從授課形式轉向學習結果</h2></div><p class="section-note">叉、圈是講者在課堂上的標記，意義已經課後核對。</p></div>
+      <div class="emi-layout">
+        <article class="emi-main"><div class="eyebrow">講者的對照</div><div class="emi-row"><span>EMI Instruction</span><span class="mark bad" aria-label="叉">×</span></div><div class="emi-row"><span>EMI Learning</span><span class="mark good" aria-label="圈">○</span></div><p>重點是學生透過 EMI 是否真正學習，而不只是採用 EMI 授課形式。</p></article>
+        <aside class="language"><div class="eyebrow">筆記中的三語</div><ul><li><strong>Subject language</strong></li><li><strong>English language</strong></li><li><strong>AI language</strong></li></ul><p>筆記也寫有聽、說、讀、寫。三種語言的完整定義未記錄在這一頁，因此先保留講者用語。</p></aside>
+      </div>
+    </section>
+  </main>
+  <footer><div class="wrap">資料來源：2026.10.30 手寫課堂筆記第 1 頁及課後核對。此頁為學習摘要，不是逐字紀錄。</div></footer>
+  <script>
+    const tabs=[...document.querySelectorAll('[role="tab"]')];
+    const panels=[...document.querySelectorAll('[role="tabpanel"]')];
+    const keys=new Set(['flow','method','language']);
+    function show(key,updateHash=true){
+      if(!keys.has(key)) key='flow';
+      for(const t of tabs){const on=t.dataset.view===key;t.setAttribute('aria-selected',String(on));t.tabIndex=on?0:-1}
+      for(const p of panels) p.hidden=p.id!=='view-'+key;
+      if(updateHash) history.replaceState(null,'','#'+key);
+    }
+    tabs.forEach((tab,i)=>{
+      tab.addEventListener('click',()=>show(tab.dataset.view));
+      tab.addEventListener('keydown',e=>{
+        if(!['ArrowRight','ArrowLeft','Home','End'].includes(e.key))return;
+        e.preventDefault();
+        const next=e.key==='Home'?0:e.key==='End'?tabs.length-1:(i+(e.key==='ArrowRight'?1:-1)+tabs.length)%tabs.length;
+        show(tabs[next].dataset.view);tabs[next].focus();
+      });
+    });
+    document.querySelectorAll('.step-button').forEach(button=>button.addEventListener('click',()=>{
+      const open=button.getAttribute('aria-expanded')!=='true';
+      button.setAttribute('aria-expanded',String(open));
+      document.getElementById(button.getAttribute('aria-controls')).hidden=!open;
+    }));
+    window.addEventListener('hashchange',()=>show(location.hash.slice(1),false));
+    show(location.hash.slice(1),false);
+  </script>
+</body>
+</html>
